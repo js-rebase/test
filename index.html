@@ -1,11 +1,18 @@
 <title>Rebase Testing</title>
 <link rel="stylesheet" href="./main.css">
-<script src="./main.js"></script>
 
 <!--====================================================-->
 
 <script type="module" id="script">
-  import rebase from "https://cdn.jsdelivr.net/gh/js-rebase/code@main/packages/main.js";
+  const commits = await fetch(
+    "https://api.github.com/repos/js-rebase/code/commits?per_page=1"
+  ).then(response => response.json());
+
+  const sha = commits[0].sha;
+
+  const { default: rebase } = await import(
+    `https://cdn.jsdelivr.net/gh/js-rebase/code@${sha}/packages/main.js`
+  );
 
   await rebase.include.load();
 </script>
